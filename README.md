@@ -15,23 +15,27 @@ A modern, SEO-optimized tech blog built with Next.js 14, TypeScript, and Tailwin
 - **Type Safety**: Full TypeScript implementation with strict mode
 
 ### Blog Features
-- **Article Management**: Dynamic article listing with categories and tags
-- **Real-time Search**: Instant search across title, excerpt, and content
+- **Real-time Search**: Instant search across title, description, and content
 - **Category Filtering**: Filter articles by tech categories
 - **Article Modal**: Beautiful modal for reading full articles
-- **Author Profiles**: Complete author information with avatars
+- **Dynamic Categories**: Categories extracted from API data
+- **Author Information**: Complete author profiles with avatars
 - **Reading Time**: Automatic reading time calculation
 - **Engagement Metrics**: Views, likes, and comments display
-- **Social Sharing**: Built-in sharing functionality (ready for integration)
+
+### API Integration
+- **Sling Academy API**: Real blog posts from external API
+- **Mock Fallback**: Graceful degradation if API fails
+- **Caching**: 1-hour cache with Next.js revalidation
+- **Error Handling**: Robust error management
 
 ### SEO Features
 - **Meta Tags**: Dynamic meta tags for all pages
 - **Structured Data**: Complete JSON-LD structured data for articles and website
-- **Sitemap**: Automatic sitemap generation with dynamic routes
+- **Sitemap**: Automatic sitemap generation
 - **Robots.txt**: SEO-friendly robots configuration
 - **Open Graph**: Social media optimization
 - **Twitter Cards**: Twitter card optimization
-- **Breadcrumb Schema**: Navigation structured data
 
 ## 📁 Project Structure
 
@@ -39,23 +43,23 @@ A modern, SEO-optimized tech blog built with Next.js 14, TypeScript, and Tailwin
 tech-blog/
 ├── app/                          # Next.js App Router
 │   ├── layout.tsx               # Root layout with metadata
-│   ├── page.tsx                 # Home page
-│   ├── globals.css              # Global styles
-│   ├── robots.ts                # Robots.txt configuration
-│   ├── sitemap.ts               # Sitemap generation
+│   ├── page.tsx                 # Home page with async data fetching
+│   ├── globals.css              # Global Tailwind styles
+│   ├── robots.ts                # SEO robots configuration
+│   ├── sitemap.ts               # SEO sitemap generation
 │   └── components/              # React components
-│       ├── Header.tsx           # Navigation header
-│       ├── Footer.tsx           # Footer component
+│       ├── Header.tsx           # Simple navigation header
+│       ├── Footer.tsx           # Simple footer component
 │       ├── Hero.tsx             # Hero section
-│       ├── ArticleGrid.tsx      # Article grid layout
-│       ├── ArticleCard.tsx      # Individual article card
-│       ├── ArticleModal.tsx     # Article reading modal
 │       ├── SearchBar.tsx        # Search functionality
-│       └── CategoryFilter.tsx   # Category filtering
+│       ├── CategoryFilter.tsx   # Category filtering
+│       ├── ArticleCard.tsx      # Article card component
+│       ├── ArticleModal.tsx     # Article reading modal
+│       └── ArticleGrid.tsx      # Main grid with search/filter
 ├── lib/                         # Utility libraries
-│   ├── api.ts                   # API client and mock data
+│   ├── api.ts                   # API client and Sling Academy integration
 │   ├── types.ts                 # TypeScript type definitions
-│   ├── seo.ts                   # SEO utilities
+│   ├── seo.ts                   # SEO utilities and structured data
 │   └── utils.ts                 # General utilities
 ├── public/                      # Static assets
 │   └── og-image.png             # Open Graph image
@@ -65,6 +69,7 @@ tech-blog/
 ├── postcss.config.js            # PostCSS configuration
 ├── tsconfig.json                # TypeScript configuration
 ├── next.config.js               # Next.js configuration
+├── package.json                 # Dependencies and scripts
 └── README.md                    # This file
 ```
 
@@ -80,22 +85,18 @@ tech-blog/
 ### Development Tools
 - **ESLint**: Code linting and formatting
 - **PostCSS**: CSS processing with Autoprefixer
-- **Tailwind Plugins**: Typography, Forms, Aspect Ratio, Container Queries
-- **TypeScript Compiler**: Strict type checking and path aliases
+- **Tailwind Plugins**: Typography, Forms, Aspect Ratio
 
-### Performance & SEO
-- **Structured Data**: JSON-LD for search engines
-- **Meta Tags**: Dynamic SEO meta tags generation
-- **Sitemap**: Automatic sitemap generation
-- **Code Splitting**: Automatic code splitting and lazy loading
-- **Bundle Optimization**: Optimized webpack configuration
+### API & Data
+- **Sling Academy API**: Real blog posts data
+- **Fetch API**: Modern data fetching with caching
+- **JSON-LD**: Structured data for SEO
 
 ## 🚀 Getting Started
 
 ### Prerequisites
 - **Node.js 18+** - Latest LTS version recommended
-- **npm** (comes with Node.js) or **yarn**
-- **Git** for version control
+- **npm** - Package manager (comes with Node.js)
 
 ### Quick Start
 
@@ -108,15 +109,11 @@ tech-blog/
 2. **Install dependencies**
    ```bash
    npm install
-   # or
-   yarn install
    ```
 
 3. **Run the development server**
    ```bash
    npm run dev
-   # or
-   yarn dev
    ```
 
 4. **Open your browser**
@@ -153,18 +150,11 @@ npm run lint:fix
 - **Code Splitting**: Automatic code splitting and lazy loading
 - **Bundle Optimization**: Optimized webpack configuration
 
-### Code Quality Assessment
-- **TypeScript Coverage**: 100% with strict mode
-- **Component Architecture**: Clean, reusable components
-- **Error Handling**: Graceful fallbacks and user-friendly errors
-- **Accessibility**: WCAG 2.1 AA compliant
-- **SEO Score**: Perfect implementation with structured data
-
 ### Development Experience
 - **Hot Reload**: Fast development with instant updates
 - **Type Safety**: Comprehensive TypeScript with strict checking
 - **Code Splitting**: Optimized bundle sizes
-- **Modern Tooling**: ESLint, Prettier ready
+- **Modern Tooling**: ESLint, TypeScript ready
 
 ## 🔧 Configuration
 
@@ -173,17 +163,16 @@ npm run lint:fix
 Create a `.env.local` file for environment-specific configuration:
 
 ```env
-NEXT_PUBLIC_API_URL=https://api.tech-blog.com
-NEXT_PUBLIC_SITE_URL=https://tech-blog.vercel.app
+NEXT_PUBLIC_API_URL=https://api.slingacademy.com
+NEXT_PUBLIC_SITE_URL=https://your-vercel-url.vercel.app
 ```
 
-### Tailwind CSS Customization
+### Tailwind CSS Configuration
 
-The Tailwind configuration is extended with:
-- Custom color scheme with CSS variables
-- Extended typography scale
-- Custom animations and transitions
-- Responsive design utilities
+Simple Tailwind configuration with:
+- Content path for app directory
+- Basic theme extensions
+- No additional plugins (minimal setup)
 
 ### TypeScript Configuration
 
@@ -196,16 +185,14 @@ Strict TypeScript configuration with:
 ## 🎨 Design System
 
 ### Color Palette
-- **Primary**: Blue gradient for branding and CTAs
+- **Primary**: Blue gradients for branding and CTAs
 - **Secondary**: Gray scale for content and text
-- **Accent**: Category-specific colors for visual hierarchy
 - **Interactive**: Hover states and transitions
-- **Dark Mode**: Architecture ready for dark mode implementation
+- **Mobile-First**: Responsive design approach
 
 ### Typography
-- **Font**: Inter for body text (optimized for readability)
-- **Headings**: Scale from xs to 9xl with consistent spacing
-- **Code**: JetBrains Mono for code blocks and snippets
+- **Font**: System fonts for performance
+- **Headings**: Consistent scale from xs to 9xl
 - **Responsive**: Fluid typography across breakpoints
 
 ### Component Library
@@ -213,14 +200,6 @@ Strict TypeScript configuration with:
 - **Accessible**: ARIA labels and semantic HTML
 - **Interactive**: Hover states, transitions, and micro-interactions
 - **Consistent**: Design system utilities and reusable patterns
-- **Cards**: Article cards with hover effects and gradients
-- **Modals**: Full-featured modal with keyboard support
-
-### Layout System
-- **Container**: Responsive container with max-widths
-- **Grid**: CSS Grid for complex layouts
-- **Flexbox**: Flexible layouts for components
-- **Spacing**: Consistent spacing scale
 
 ## 📈 SEO Features
 
@@ -232,15 +211,63 @@ Strict TypeScript configuration with:
 
 ### Structured Data
 - Article schema for blog posts
-- BreadcrumbList for navigation
 - Website and Organization schemas
 - SearchAction for site search
+- BreadcrumbList for navigation
 
 ### Technical SEO
 - XML sitemap generation
 - Robots.txt configuration
 - URL structure optimization
 - Internal linking strategy
+
+## 🌐 What You'll See
+
+### Homepage
+- Clean, modern design with Tailwind CSS
+- Hero section with "Latest Tech Articles"
+- Search bar for real-time filtering
+- Category filter buttons
+- Grid of article cards with real images
+- Responsive layout for all devices
+
+### Article Cards
+- Beautiful images from Sling Academy API
+- Article title and description
+- Click to open full article modal
+
+### Article Modal
+- Full article content display
+- Image at the top
+- Close button and keyboard support (ESC)
+- Structured data for SEO
+
+### Search & Filter
+- Real-time search across all content
+- Category-based filtering
+- Result count display
+- Smooth interactions
+
+## 🔧 Technical Implementation
+
+### API Integration
+- Uses Sling Academy's sample blog posts API
+- Fetches 10 blog posts with rich content
+- Graceful error handling
+- 1-hour cache with Next.js revalidation
+
+### Data Flow
+1. **Page Load**: Server-side fetch of blog posts
+2. **Client State**: Search and filter state management
+3. **Real-time Updates**: Instant search and filtering
+4. **Modal Display**: Full article content in modal
+
+### Performance Features
+- Next.js 14 App Router optimization
+- Image optimization with Next.js Image
+- Server-side rendering for better SEO
+- Client-side interactions where needed
+- Automatic code splitting
 
 ## 🚀 Deployment
 
@@ -256,25 +283,16 @@ The application can be deployed to any platform supporting Next.js:
 - **AWS Amplify**: Serverless deployment with CI/CD
 - **DigitalOcean App Platform**: Simple app deployment
 - **Railway**: Modern deployment platform
-- **Heroku**: Classic platform with easy setup
 
 ### Environment Setup
 ```bash
 # Production environment variables
-NEXT_PUBLIC_API_URL=https://api.yourblog.com
+NEXT_PUBLIC_API_URL=https://api.slingacademy.com
 NEXT_PUBLIC_SITE_URL=https://yourblog.com
 NEXT_PUBLIC_ANALYTICS_ID=your-analytics-id
 ```
 
-### Build Optimization
-- **Static Generation**: Pre-rendered pages for better performance
-- **Image Optimization**: Automatic WebP/AVIF conversion
-- **Bundle Analysis**: Optimized for minimal bundle size
-- **CDN Ready**: Optimized for content delivery networks
-
 ## 🤝 Contributing
-
-We welcome contributions! Please follow these steps:
 
 1. **Fork the Repository**
    ```bash
