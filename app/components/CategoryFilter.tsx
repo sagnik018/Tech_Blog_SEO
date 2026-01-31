@@ -1,33 +1,29 @@
-import { Category } from '@/lib/types'
+"use client";
 
-interface CategoryFilterProps {
-  categories: Category[]
-  selectedCategory: Category | null
-  onCategoryChange: (category: Category | null) => void
-}
-
-export function CategoryFilter({ 
-  categories, 
-  selectedCategory, 
-  onCategoryChange 
-}: CategoryFilterProps) {
+export default function CategoryFilter({
+  categories,
+  active,
+  onChange,
+}: {
+  categories: string[];
+  active: string;
+  onChange: (cat: string) => void;
+}) {
   return (
-    <div className="space-y-2">
-      <label className="block text-sm font-medium text-gray-700 mb-2">
-        Filter by Category
-      </label>
-      <select
-        value={selectedCategory || ''}
-        onChange={(e) => onCategoryChange(e.target.value as Category || null)}
-        className="input w-full px-3 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-      >
-        <option value="">All Categories</option>
-        {categories.map((category) => (
-          <option key={category} value={category}>
-            {category.charAt(0).toUpperCase() + category.slice(1).replace('-', ' ')}
-          </option>
-        ))}
-      </select>
+    <div className="flex gap-2 flex-wrap mb-4">
+      {categories.map((cat) => (
+        <button
+          key={cat}
+          onClick={() => onChange(cat)}
+          className={`px-3 py-1 rounded text-sm ${
+            active === cat
+              ? "bg-black text-white"
+              : "bg-gray-200"
+          }`}
+        >
+          {cat}
+        </button>
+      ))}
     </div>
-  )
+  );
 }
