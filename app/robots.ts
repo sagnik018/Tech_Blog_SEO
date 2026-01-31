@@ -1,12 +1,6 @@
-import { MetadataRoute } from 'next'
-
-export default function robots(): MetadataRoute.Robots {
+export default function robots() {
   return {
-    rules: {
-      userAgent: '*',
-      allow: '/',
-      disallow: ['/api/', '/admin/', '/_next/static/', '/_next/image/'],
-    },
-    sitemap: 'https://tech-blog.vercel.app/sitemap.xml',
-  }
+    rules: [{ userAgent: "*", allow: "/" }],
+    sitemap: "https://your-vercel-url.vercel.app/sitemap.xml",
+  };
 }
